@@ -1,47 +1,64 @@
-// src/App.jsx
-import React from 'react'
+import { useState } from 'react';
+import './App.css';
 
 function App() {
+  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.name && formData.email) {
+      setRegisteredUsers([...registeredUsers, formData]);
+      setFormData({ name: '', email: '' });
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    }
+  };
+
   return (
-    <div style={{
-      backgroundColor: '#f0f9f0',
-      padding: '2rem',
-      fontFamily: 'Arial, sans-serif',
-      color: '#2c3e50'
-    }}>
-      <h1>🌿 Vườn Địa Đàng</h1>
-      <p>
-        Chào mừng bạn đến với một hành trình xây dựng <strong>Vườn Địa Đàng</strong> – 
-        nơi con người, AI và thiên nhiên cùng chung sống hòa hợp.
-      </p>
+    <div className="container">
+      <h1>Vườn Địa Đàng 🌿</h1>
+      <p>Chào mừng đến với hành trình xây dựng Vườn Địa Đàng thực tế trên Trái Đất.</p>
 
-      <h2>🎯 Mục tiêu</h2>
-      <ul>
-        <li>Tạo ra cộng đồng phát triển tri thức – vật tư – nhân đạo</li>
-        <li>Thiết kế mô hình nông nghiệp tự động & năng lượng tái tạo</li>
-        <li>Chia sẻ tài nguyên, hỗ trợ người thiếu điều kiện hiện thực hóa ước mơ</li>
-      </ul>
+      <form onSubmit={handleSubmit} className="form">
+        <h2>📩 Đăng ký nhận Token ban đầu</h2>
+        <input
+          type="text"
+          name="name"
+          placeholder="Tên của bạn"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email của bạn"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">Đăng ký</button>
+        {showSuccess && <p className="success">✅ Đăng ký thành công!</p>}
+      </form>
 
-      <h2>🎁 Nhận Token ban đầu</h2>
-      <p>
-        Đăng ký để nhận Token ban đầu, được vinh danh, và tham gia đóng góp xây dựng.
-      </p>
-      <a href="https://forms.gle/..." target="_blank" rel="noopener noreferrer"
-         style={{
-           padding: '10px 20px',
-           backgroundColor: '#27ae60',
-           color: 'white',
-           borderRadius: '5px',
-           textDecoration: 'none'
-         }}>
-        👉 Đăng ký tham gia
-      </a>
-
-      <p style={{ marginTop: '2rem', fontSize: '0.9rem', color: '#888' }}>
-        Một dự án cộng đồng bởi Ni và NiA. Mọi người đều được chào đón. 💚
-      </p>
+      <div className="list">
+        <h2>🌟 Bảng vinh danh người đóng góp</h2>
+        <ul>
+          {registeredUsers.map((user, index) => (
+            <li key={index}>
+              {user.name} ({user.email})
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
