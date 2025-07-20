@@ -1,0 +1,11 @@
+function App() {
+  return (
+    <div style={{ padding: '2rem', fontFamily: 'sans-serif', textAlign: 'center' }}>
+      <h1>🌿 Vườn Địa Đàng</h1>
+      <p>Chào mừng bạn đến với cộng đồng tái tạo sự sống, tri thức và lòng nhân ái.</p>
+      <p>Cùng nhau chia sẻ ý tưởng, kiến tạo mô hình bền vững và giúp đỡ lẫn nhau.</p>
+    </div>
+  );
+}
+
+export default App;
